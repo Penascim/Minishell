@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:34:20 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:34:26 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	char	*prompt;
-	char	*cmd;
+	size_t	i;
 
-	prompt = "minishell$";
-	while (42)
+	i = 0;
+	if (s && f)
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		while (*s)
+			f(i++, s++);
 	}
 }
-
+/*
+void	uppercase(unsigned int index, char *ch)
+{
+	(void)index;
+	*ch = ft_toupper(*ch);
+}
 int	main(void)
 {
-	print_prompt();
+	char	str[] = "hello";
+
+	printf("Original String: %s\n", str);
+	ft_striteri(str, uppercase);
+	printf("Modified String: %s\n", str);
 	return (0);
-}
+}*/

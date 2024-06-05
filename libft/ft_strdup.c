@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:30:36 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:30:37 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+char	*ft_strdup(const char *src)
 {
-	char	*prompt;
-	char	*cmd;
+	int		i;
+	int		len;
+	char	*dest;
 
-	prompt = "minishell$";
-	while (42)
+	len = ft_strlen(src);
+	dest = (char *)malloc(len + 1);
+	if (dest != NULL)
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		i = 0;
+		while (src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
 	}
+	return (dest);
 }
 
-int	main(void)
+/*int	main(void)
 {
-	print_prompt();
+	printf("%s\n", ft_strdup("Hello world!"));
 	return (0);
-}
+}*/

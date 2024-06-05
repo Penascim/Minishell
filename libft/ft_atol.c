@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2024/03/19 17:15:31 by thfranco          #+#    #+#             */
+/*   Updated: 2024/03/19 17:39:29 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+long	ft_atol(const char *str)
 {
-	char	*prompt;
-	char	*cmd;
+	int		sign;
+	long	result;
+	int		i;
 
-	prompt = "minishell$";
-	while (42)
+	result = 0;
+	sign = 1;
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10;
+		result = result + str[i] - '0';
+		i++;
+	}
+	return (result * sign);
 }

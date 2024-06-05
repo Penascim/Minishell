@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:37:12 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:37:14 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+int	ft_lstsize(t_list *lst)
 {
-	char	*prompt;
-	char	*cmd;
+	size_t	i;
 
-	prompt = "minishell$";
-	while (42)
+	i = 0;
+	while (lst)
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		lst = lst -> next;
+		i++;
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	return (i);
 }

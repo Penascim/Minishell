@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:35:55 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:35:57 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*prompt;
-	char	*cmd;
-
-	prompt = "minishell$";
-	while (42)
+	if (n == -2147483648)
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		write(fd, "-", 1);
+		write(fd, "2", 1);
+		ft_putnbr_fd(147483648, fd);
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		ft_putnbr_fd(-n, fd);
+	}
+	else if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd(n % 10 + '0', fd);
+	}
+	else
+		ft_putchar_fd(n + '0', fd);
 }

@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:30:13 by thfranco          #+#    #+#             */
+/*   Updated: 2024/03/05 15:56:22 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	*ft_calloc(size_t n_elements, size_t size)
 {
-	char	*prompt;
-	char	*cmd;
+	size_t	total;
+	void	*allocated_memory;
 
-	prompt = "minishell$";
-	while (42)
-	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
-	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	total = n_elements * size;
+	allocated_memory = malloc(total);
+	if (allocated_memory != NULL)
+		ft_memset(allocated_memory, 0, total);
+	return (allocated_memory);
 }

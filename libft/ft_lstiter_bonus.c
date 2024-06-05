@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:38:53 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:38:57 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	char	*prompt;
-	char	*cmd;
-
-	prompt = "minishell$";
-	while (42)
+	if (!(lst || f))
+		return ;
+	while (lst != NULL)
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		f(lst -> content);
+		lst = lst -> next;
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
 }

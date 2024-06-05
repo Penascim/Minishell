@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:37:50 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:37:52 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char	*prompt;
-	char	*cmd;
+	t_list	*temp;
 
-	prompt = "minishell$";
-	while (42)
+	if (!(lst || new))
+		return ;
+	if (!(*lst))
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		*lst = new;
+		return ;
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	temp = *lst;
+	while (temp -> next)
+		temp = temp ->next;
+	temp -> next = new;
 }

@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:35:24 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:35:26 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*prompt;
-	char	*cmd;
+	int	i;
 
-	prompt = "minishell$";
-	while (42)
+	i = 0;
+	if (!s || !fd)
+		return ;
+	while (s[i] != '\0')
 	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
+		write(fd, &s[i], 1);
+		i++;
 	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
 }

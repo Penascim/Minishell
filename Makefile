@@ -1,10 +1,11 @@
-SRC = main.c
-
 NAME = minishell
-OBJ = $(SRC:.c=.o)
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
+LIBS = libft/libft.a
+
+SRC = sources/main.c
+OBJ = $(SRC:.c=.o)
 
 Reset = \033[0m
 G = \033[32m
@@ -15,8 +16,9 @@ blink = \033[6;7;1;3m
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "-------------------------------------------------------------------------------------"
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "-----------------------Compilation of $(NAME)----------------------------------------"
+	@make -s -C libft/
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
 
@@ -25,13 +27,17 @@ val:
 
 hell:
 	valgrind --tool=helgrind ./minishell
+
 clean:
+	@make -s clean -C libft/
 	$(RM) $(OBJ)
 	@echo "$(Y) 😉 Objects from the $(NAME) project have been removed $(Reset)"
 
 fclean: clean
 	@echo "-------------------------------------------------------------------------------------"
+	@make -s fclean -C libft/
 	$(RM) $(NAME)
+	@$(RM) $(LIBFT)
 	@echo "$(blink)$(R) ❌ removed $(NAME) executable $(Reset)"
 	@echo "-------------------------------------------------------------------------------------"
 

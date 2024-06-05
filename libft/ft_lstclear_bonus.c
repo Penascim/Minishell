@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:51 by thfranco         ###   ########.fr       */
+/*   Created: 2023/11/04 11:38:16 by thfranco          #+#    #+#             */
+/*   Updated: 2023/11/04 11:38:18 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
 
-void	print_prompt(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	*prompt;
-	char	*cmd;
-
-	prompt = "minishell$";
-	while (42)
-	{
-		cmd = readline(prompt);
-		if (!cmd)
-			break ;
-		if (*cmd)
-			add_history(cmd);
-		free(cmd);
-	}
-}
-
-int	main(void)
-{
-	print_prompt();
-	return (0);
+	if (!lst || !del || !(*lst))
+		return ;
+	ft_lstclear(&(*lst)-> next, del);
+	(del)((*lst)-> content);
+	free(*lst);
+	*lst = NULL;
 }
