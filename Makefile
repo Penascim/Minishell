@@ -1,4 +1,4 @@
-SRC = ../sources/main.c
+SRC = sources/main.c
 
 NAME = minishell
 OBJ = $(SRC:.c=.o)
