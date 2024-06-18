@@ -6,8 +6,13 @@
 /*   By: penascim <penascim@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/17 11:48:51 by penascim         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:16:49 by penascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	main(int ac, char **av, char **envp)
+{
+	(void)ac;
+	(void)**av;
+	(void)**envp;
+}

@@ -1,5 +1,4 @@
-SRC = main.c
-
+SRC = sources/main.c sources/history.c
 NAME = minishell
 OBJ = $(SRC:.c=.o)
 CC = cc
