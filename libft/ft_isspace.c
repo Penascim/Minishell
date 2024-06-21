@@ -6,9 +6,11 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 11:35:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/06/20 11:41:15 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:03:23 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+int	ft_isspace(int c);
 
 int	ft_isspace(int c)
 {

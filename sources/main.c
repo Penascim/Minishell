@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/20 12:01:03 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:00:40 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,81 @@
 	ft_strlcpy(token, )
 }*/
 
+void print_token_list(t_token *head) {
+    t_token *current = head;
+
+    printf("Lista de Tokens:\n");
+
+    while (current != NULL) {
+        printf("Token: %s\n", current->data);
+		printf("Tipo: %d\n",current->token);
+        current = current->next;
+    }
+}
+
+
+static t_token	*last_from_list(t_token *data)
+{
+	if (!data)
+		return (NULL);
+	while (data->next)
+		data = data->next;
+	return (data);
+}
+
+static void	add_node(t_token **data, t_type_cmd type, char *value)
+{
+	t_token	*new_node;
+	t_token	*last_node;
+
+	if (!data)
+		return ;
+	new_node = (t_token *)malloc(sizeof(t_token));
+	if (!new_node)
+		return ;
+	new_node->token = type;
+	new_node->data = ft_strdup(value);
+	new_node->next = NULL;
+	new_node->prev = NULL;
+	if (!(*data))
+		(*data) = new_node;
+	else
+	{
+		last_node = last_from_list(*data);
+		last_node->next = new_node;
+		new_node->prev = last_node;
+	}
+}
+
+void	free_list(t_token **data)
+{
+	t_token	*current;
+	t_token	*temp;
+
+	if (!data || !(*data))
+		return ;
+	current = *data;
+	while (current)
+	{
+		temp = current->next;
+		free(current->data);
+		free(current);
+		current = temp;
+	}
+	*data = NULL;
+}
 
 static void	tokenization(char *cmd)
 {
-	//t_token	data;
+	t_token	*data;
 	t_type_cmd	type;
 	int	i;
 	int	start;
 
 	i = 0;
+	data = NULL;
+	if (!cmd)
+		return ;
 	while (cmd[i] != '\0')
 	{
 		while (ft_isspace(cmd[i]))
@@ -64,13 +130,27 @@ static void	tokenization(char *cmd)
 		else
 		{
 			type = CMD;
-			while (cmd[i] != 0 && !ft_isspace(cmd[i]) && cmd[i] != '<'
+			while (cmd[i] != 0 && !(ft_isspace(cmd[i])) && cmd[i] != '<'
 				&& cmd[i] != '>' && cmd[i] != '|')
 				i++;
-			i++;
+		}
+		int token_length = i - start;
+
+		printf("%s\n", cmd);
+		if (token_length > 0)
+		{
+			char	*token = (char *)calloc((token_length + 1), sizeof(char));
+			ft_strncpy(token, cmd + start, token_length);
+			token[token_length] = '\0';
+			printf("Token: %s\n", token);
+			add_node(&data, type, token);
+			free(token);
 		}
 	}
-
+	if (data){
+		print_token_list(data);
+		free_list(&data);
+	}
 }
 
 void	print_prompt(void)
@@ -78,7 +158,7 @@ void	print_prompt(void)
 	char	*prompt;
 	char	*cmd;
 
-	prompt = "minishell$";
+	prompt = "minishell$ ";
 	while (42)
 	{
 

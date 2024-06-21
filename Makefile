@@ -17,8 +17,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "-----------------------Compilation of $(NAME)----------------------------------------"
-	@make -s -C libft/
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
+	@make bonus -s -C libft/
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS) -lreadline
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
 
