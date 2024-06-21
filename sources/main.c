@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/19 17:21:00 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/06/20 12:01:03 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	tokenization(char *cmd)
 	i = 0;
 	while (cmd[i] != '\0')
 	{
-		while ((cmd[i] >= 9 || cmd[i] <= 13) && cmd[i] == 32)
+		while (ft_isspace(cmd[i]))
 			i++;
 		start = i;
 		if (cmd[i] == '<' && cmd[i+1] == '<')
@@ -64,7 +64,8 @@ static void	tokenization(char *cmd)
 		else
 		{
 			type = CMD;
-			while (cmd[i] != 0 && !isspace(cmd[i]) && cmd[i] != '<' && cmd[i] != '>' && cmd[i] != '|')
+			while (cmd[i] != 0 && !ft_isspace(cmd[i]) && cmd[i] != '<'
+				&& cmd[i] != '>' && cmd[i] != '|')
 				i++;
 			i++;
 		}
