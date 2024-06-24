@@ -1,8 +1,8 @@
 TO DO LIST:
 
-#adicionar libft
-#dar free apropriadamente
-#Built-in
-#norminette
-#parsing
+# adicionar libft
+# dar free apropriadamente
+# Built-in
+# norminette
+# parsing
 
