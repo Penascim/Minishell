@@ -22,11 +22,8 @@ $(NAME): $(OBJ)
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
 
-val:
-	valgrind --leak-check=full --track-origins=yes ./minishell
-
-hell:
-	valgrind --tool=helgrind ./minishell
+val: re
+	valgrind --leak-check=full --track-origins=yes --suppressions=supressions.supp -s ./minishell
 
 clean:
 	@make -s clean -C libft/
@@ -40,6 +37,7 @@ fclean: clean
 	@$(RM) $(LIBFT)
 	@echo "$(blink)$(R) ❌ removed $(NAME) executable $(Reset)"
 	@echo "-------------------------------------------------------------------------------------"
+
 
 re: fclean all
 

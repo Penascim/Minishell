@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:24:06 by penascim          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:39 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:37:44 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_type
 
 typedef struct s_token
 {
-	char			*data;
+	char			*value;
 	t_type_cmd		token;
 	struct s_token	*next;
 	struct s_token	*prev;
