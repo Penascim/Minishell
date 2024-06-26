@@ -4,7 +4,10 @@ RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
 LIBS = libft/libft.a
 
-SRC = sources/main.c
+SRC =	sources/main.c\
+		sources/tokenization.c\
+		sources/utils_token.c\
+
 OBJ = $(SRC:.c=.o)
 
 Reset = \033[0m
