@@ -7,6 +7,7 @@ LIBS = libft/libft.a
 SRC =	sources/main.c\
 		sources/tokenization.c\
 		sources/utils_token.c\
+		sources/parse.c\
 
 OBJ = $(SRC:.c=.o)
 
