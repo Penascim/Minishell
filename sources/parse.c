@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:58:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/04 20:30:04 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:33:54 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,50 +57,55 @@ void print_tree(t_tree_node *node, int level) {
         print_tree(node->right, level + 1);
 }
 
-void	parse(t_token *data)
-{
-	t_tree_node *root = NULL;
-	t_tree_node *current = NULL;
-	t_tree_node *new_node = NULL;
-	t_tree_node *temp = NULL;
+static t_tree_node *parse_command(t_token **data) {
+    if (*data == NULL) return NULL;
 
-	//print_token_list(data);
-	while (data)
-	{
-		new_node = create_tree_node(data->token, data->value);
-		if (!new_node)
-		{
-			perror("Failed to create tree node");
-			exit(EXIT_FAILURE);
-		}
-		if(!root)
-			root = current = new_node;
-		else if (data->token == CMD || data->token == ARG
-			|| data->token == ENV_VAR || data->token == EXPAND)
-		{
-			if (current->right)
-			{
-				temp = current->right;
-				while (temp->left)
-					temp = temp->left;
-				temp->left = new_node;
-			}
-			else
-				current->right = new_node;
-		}
-		else if (data->token == REDIRECT_IN || data->token == REDIRECT_OUT
-			|| data->token == APPEND || data->token == HEREDOC || data->token == PIPE)
-		{
-			new_node->left = current;
-			current = new_node;
-			if (!root)
-				root = current;
-		}
-		data = data->next;
-	}
-	printf("AQUIIII\n");
-	//return (root);
-	//print_token_list(data);
-	print_tree(root, 0);
-	free_tree(root);
+    t_tree_node *node = create_tree_node((*data)->token, (*data)->value);
+    *data = (*data)->next;
+
+    // Parse arguments
+    t_tree_node *current = node;
+    while (*data && ((*data)->token == ARG || (*data)->token == ENV_VAR)) {
+        t_tree_node *arg_node = create_tree_node((*data)->token, (*data)->value);
+        current->right = arg_node; // Link argument to the command
+        current = arg_node;
+        *data = (*data)->next;
+    }
+
+    return node;
+}
+
+
+// Function to parse an expression
+t_tree_node *parse_expression(t_token **data) {
+    t_tree_node *left_node = parse_command(data);
+
+    while (*data && ((*data)->token == PIPE || (*data)->token == REDIRECT_IN ||
+                     (*data)->token == REDIRECT_OUT || (*data)->token == APPEND ||
+                     (*data)->token == HEREDOC)) {
+
+        int operator_type = (*data)->token;
+        char *value = (*data)->value;
+        *data = (*data)->next;
+
+        t_tree_node *operator_node = create_tree_node(operator_type, value);
+        operator_node->left = left_node;
+
+        // Parse the right side of the operator
+        operator_node->right = parse_command(data);
+
+        left_node = operator_node; // Update left_node to the new operator node
+    }
+
+    return left_node;
+}
+
+
+// Main parsing function
+void parse(t_token *data) {
+    t_tree_node *root = parse_expression(&data);
+
+    printf("Tree Construction Complete\n");
+    print_tree(root, 0);
+    free_tree(root);
 }
