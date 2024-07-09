@@ -6,25 +6,11 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/04 18:57:00 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:46:46 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	print_token_list(t_token *head)
-{
-	t_token	*current;
-
-	current = head;
-	printf("Lista de Tokens:\n");
-	while (current != NULL)
-	{
-		printf("Token: %s\n", current->value);
-		printf("Tipo: %d\n", current->token);
-		current = current->next;
-	}
-}
 
 t_token	*last_from_list(t_token *data)
 {
@@ -75,4 +61,10 @@ void	free_list(t_token **data)
 		current = temp;
 	}
 	*data = NULL;
+}
+
+t_token	*set_token_list(t_token *data, char *value_cmd, int type)
+{
+	add_node(&data, type, value_cmd);
+	return (data);
 }

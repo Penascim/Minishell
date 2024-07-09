@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:44:47 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/04 15:22:47 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:25:07 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,6 @@ char	*get_token(char *cmd, int i, int start)
 	return (token);
 }
 
-t_token *set_token_list(t_token *data, char * value_cmd, int type)
-{
-	add_node(&data, type, value_cmd);
-	//print_token_list(data);
-	return (data);
-
-}
-
-int  index_env(char *cmd, int i)
-{
-    if (cmd[i++] == '{')
-        while (cmd[i] && cmd[i++] != '}');
-    else if (cmd[i++] == '(')
-        while (cmd[i] && cmd[i++] != ')');
-    else
-        while(cmd[i] && !ft_isspace(cmd[i++]));
-    return (i);
-}
-
 int	type_index(t_type_cmd type, char *cmd, int i)
 {
 	if (type == HEREDOC || type == APPEND)
@@ -97,12 +78,11 @@ int	is_first_token(t_type_cmd type)
 		return (0);
 }
 
-t_token	*tokenization(char *cmd)
+t_token	*tokenization(char *cmd, t_token *data)
 {
 	t_type_cmd	type;
 	int			i;
 	int			start;
-	t_token		*data;
 	int			first_token;
 	char		*value;
 
@@ -123,7 +103,5 @@ t_token	*tokenization(char *cmd)
 		first_token = is_first_token(type);
 		free(value);
 	}
-	//print_token_list(data);
 	return (data);
-	//free_list(&data);
 }

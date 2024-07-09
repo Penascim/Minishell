@@ -8,6 +8,8 @@ SRC =	sources/main.c\
 		sources/tokenization.c\
 		sources/utils_token.c\
 		sources/parse.c\
+		sources/second_utils_token.c\
+		sources/extra_to_print.c\
 
 OBJ = $(SRC:.c=.o)
 
