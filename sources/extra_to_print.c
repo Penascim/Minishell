@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:37:25 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/09 11:38:20 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:24:09 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,16 @@ void	print_token_list(t_token *head)
 		printf("Tipo: %d\n", current->token);
 		current = current->next;
 	}
+}
+
+
+void	print_error(char *msg, char *value)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(value,2);
+	ft_putstr_fd("\'\n", 2);
+	if (errno != 0)
+		perror("");
+	//exit(1);
 }

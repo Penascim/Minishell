@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:24:06 by penascim          #+#    #+#             */
-/*   Updated: 2024/07/09 11:46:58 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:16:47 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,15 @@ void					free_tree(t_tree_node *node);
 // execute
 void					ft_free_tab(char **tab);
 char					*get_path(char *cmd, char **envp);
-void					print_error(char *msg);
+void					print_error(char *msg, char *value);
 void					ft_execute(char *av, char **envp);
+
+// check_error
+int						has_error(t_token *data);
+int						check_bigger_then(t_token *data);
+int						check_lower_then(t_token *data);
+int						check_pipe(t_token *data);
+int						check_start_end(t_token *data);
 
 // extra_to_print
 void					print_tree(t_tree_node *node, int level);

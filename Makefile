@@ -10,6 +10,7 @@ SRC =	sources/main.c\
 		sources/parse.c\
 		sources/second_utils_token.c\
 		sources/extra_to_print.c\
+		sources/check_errors.c\
 
 OBJ = $(SRC:.c=.o)
 
