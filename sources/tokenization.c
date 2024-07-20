@@ -6,11 +6,26 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:44:47 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/09 17:44:38 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:52:20 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static t_type_cmd	find_type_cont(char *cmd, int i, int first_token)
+{
+	if (cmd[i] == '\'')
+		return (S_QUOTE);
+	else if (cmd[i] == '\"')
+		return (D_QUOTE);
+	else
+	{
+		if (first_token)
+			return (CMD);
+		else
+			return (ARG);
+	}
+}
 
 t_type_cmd	find_type(char *cmd, int i, int first_token)
 {
@@ -30,10 +45,7 @@ t_type_cmd	find_type(char *cmd, int i, int first_token)
 		return (ARG);
 	else
 	{
-		if (first_token)
-			return (CMD);
-		else
-			return (ARG);
+		return (find_type_cont(cmd, i, first_token));
 	}
 }
 
@@ -51,23 +63,6 @@ char	*get_token(char *cmd, int i, int start)
 		token[token_length] = '\0';
 	}
 	return (token);
-}
-
-int	type_index(t_type_cmd type, char *cmd, int i)
-{
-	if (type == HEREDOC || type == APPEND)
-		i += 2;
-	else if (type == ENV_VAR)
-		index_env(cmd, i);
-	else if (type == CMD || type == ARG)
-	{
-		while (cmd[i] != 0 && !(ft_isspace(cmd[i])) && cmd[i] != '<'
-			&& cmd[i] != '>' && cmd[i] != '|')
-			i++;
-	}
-	else
-		i++;
-	return (i);
 }
 
 int	is_first_token(t_type_cmd type)

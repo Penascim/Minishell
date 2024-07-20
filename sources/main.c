@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:15:49 by penascim          #+#    #+#             */
-/*   Updated: 2024/07/09 17:12:59 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:06:04 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	run(char *prompt)
 		{
 			add_history(cmd);
 			tokens = tokenization(cmd, tokens);
+			print_token_list(tokens);
 			if (has_error(tokens))
 			{
 				parse(tokens);

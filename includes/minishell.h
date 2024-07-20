@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:24:06 by penascim          #+#    #+#             */
-/*   Updated: 2024/07/09 17:16:47 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:05:00 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ typedef enum e_type
 	APPEND,
 	EXPAND,
 	ENV_VAR,
+	S_QUOTE,
+	D_QUOTE,
+	COMMAND_SUBSTITUTION,
+	NONE,
 }						t_type_cmd;
 
 typedef struct s_token
@@ -85,8 +89,10 @@ void					free_list(t_token **data);
 t_token					*set_token_list(t_token *data, char *value_cmd,
 							int type);
 
-// second_utils_token
-int						index_env(char *cmd, int i);
+// index
+int						index_envvar(char *cmd, int i);
+int						index_single(char *cmd, int i);
+int						index_double(char *cmd, int i);
 
 // parse
 t_tree_node				*create_tree_node(t_type_cmd type, char *value);
@@ -102,11 +108,15 @@ void					print_error(char *msg, char *value);
 void					ft_execute(char *av, char **envp);
 
 // check_error
-int						has_error(t_token *data);
-int						check_bigger_then(t_token *data);
-int						check_lower_then(t_token *data);
+int	check_append(t_token *data);
+int	check_redirect_out(t_token *data);
+int	check_heredoc(t_token *data);
+int	check_redirect_in(t_token *data);
 int						check_pipe(t_token *data);
+
+// utils_errors
 int						check_start_end(t_token *data);
+int						has_error(t_token *data);
 
 // extra_to_print
 void					print_tree(t_tree_node *node, int level);

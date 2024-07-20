@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:58:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/09 16:16:38 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:32:20 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	parse(t_token *data)
 	t_tree_node	*root;
 
 	root = parse_expression(&data);
-	//printf("Tree Construction Complete\n");
-	//print_tree(root, 0);
+	printf("Tree Construction Complete\n");
+	print_tree(root, 0);
 	free_tree(root);
 }
