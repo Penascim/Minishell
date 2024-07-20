@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 19:24:06 by penascim          #+#    #+#             */
-/*   Updated: 2024/07/20 15:05:00 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:47:35 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -108,11 +109,14 @@ void					print_error(char *msg, char *value);
 void					ft_execute(char *av, char **envp);
 
 // check_error
-int	check_append(t_token *data);
-int	check_redirect_out(t_token *data);
-int	check_heredoc(t_token *data);
-int	check_redirect_in(t_token *data);
+int						check_append(t_token *data);
+int						check_redirect_out(t_token *data);
+int						check_heredoc(t_token *data);
+int						check_redirect_in(t_token *data);
 int						check_pipe(t_token *data);
+
+// handle_heredoc
+void					heredoc(t_token *data);
 
 // utils_errors
 int						check_start_end(t_token *data);
