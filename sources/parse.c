@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:58:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/15 20:32:20 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:13:54 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ t_tree_node	*create_tree_node(t_type_cmd type, char *value)
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
+ }
+// int is_operator(t_type_cmd token) {
+//     return (token == PIPE || token == REDIRECT_IN || token == REDIRECT_OUT ||
+//            token == APPEND || token == HEREDOC );
+// }
+
+t_token *get_last_token(t_token *data) {
+    t_token *current;
+
+	current = data;
+    while (current->next)
+        current = current->next;
+    return (current);
 }
 
 t_tree_node	*parse_command(t_token **data)
@@ -49,7 +62,7 @@ t_tree_node	*parse_command(t_token **data)
 	node = create_tree_node((*data)->token, (*data)->value);
 	*data = (*data)->next;
 	current = node;
-	while (*data && ((*data)->token == ARG || (*data)->token == ENV_VAR))
+	while (*data && ((*data)->token == CMD || (*data)->token == ENV_VAR))
 	{
 		arg_node = create_tree_node((*data)->token, (*data)->value);
 		current->right = arg_node;
@@ -86,8 +99,35 @@ void	parse(t_token *data)
 {
 	t_tree_node	*root;
 
-	root = parse_expression(&data);
+	root = parse_expression(get_last_token(&data));
 	printf("Tree Construction Complete\n");
 	print_tree(root, 0);
 	free_tree(root);
 }
+
+
+
+
+// void	get_command(t_token *data)
+// {
+// 	int token;
+// 	char *value;
+
+// 	if (is_operator(data->token) || is_operator(data->prev->token))
+// 	{
+// 		if(is_first_token(data->token))
+// 			data = data->next;
+// 		while (data && data->token == CMD || (data->token == ENV_VAR))
+// 		{
+// 			token = data->token;
+// 			value = ft_strjoin(value, data->value);
+// 			data = data->next;
+// 		}
+// 	}
+// 	if (is_operator(data->next->token))
+// 	{
+// 		while (data && data->prev->token == CMD || (data->prev->token == ENV_VAR))
+// 			data = data->prev;
+// 	}
+// 	return ()
+// }

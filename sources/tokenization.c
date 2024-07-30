@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:44:47 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/20 14:52:20 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:26:10 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 static t_type_cmd	find_type_cont(char *cmd, int i, int first_token)
 {
+	(void)first_token;
 	if (cmd[i] == '\'')
 		return (S_QUOTE);
 	else if (cmd[i] == '\"')
 		return (D_QUOTE);
 	else
 	{
-		if (first_token)
+		//if (first_token)
 			return (CMD);
-		else
-			return (ARG);
+		//else
+			//return (ARG);
 	}
 }
 
@@ -41,8 +42,8 @@ t_type_cmd	find_type(char *cmd, int i, int first_token)
 		return (PIPE);
 	else if (cmd[i] == '$' && ft_isalpha(cmd[i + 1]))
 		return (ENV_VAR);
-	else if (!first_token && cmd[i] == '-' && ft_isalpha(cmd[i + 1]))
-		return (ARG);
+	//else if (!first_token && cmd[i] == '-' && ft_isalpha(cmd[i + 1]))
+	//	return (ARG);
 	else
 	{
 		return (find_type_cont(cmd, i, first_token));
