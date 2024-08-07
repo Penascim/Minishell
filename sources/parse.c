@@ -6,7 +6,7 @@
 /*   By: thfranco <thfranco@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:58:59 by thfranco          #+#    #+#             */
-/*   Updated: 2024/07/30 19:47:13 by thfranco         ###   ########.fr       */
+/*   Updated: 2024/08/03 19:36:12 by thfranco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,131 +78,51 @@ t_token *get_last_token(t_token *data)
 
 // }
 
-void get_command(t_token **data)
+
+//working
+t_tree_node	*parse_command(t_token **data)
 {
-    char *value = NULL;
-    t_token *start = *data;
+	t_tree_node	*node;
+	t_tree_node	*current;
+	t_tree_node	*arg_node;
 
-    if (is_operator((*data)->token) || is_operator((*data)->prev->token))
-    {
-        if (is_first_token((*data)->token))
-            *data = (*data)->next;
-
-        while (*data && ((*data)->token == CMD || (*data)->token == ENV_VAR))
-        {
-            value = ft_strjoin(value, (*data)->value);
-            *data = (*data)->next;
-        }
-    }
-
-    if (*data && is_operator((*data)->token))
-    {
-        while (*data && ((*data)->prev->token == CMD || (*data)->prev->token == ENV_VAR))
-            *data = (*data)->prev;
-    }
-
-    // Atualiza *data para o início
-    *data = start;
+	if (*data == NULL)
+		return (NULL);
+	node = create_tree_node((*data)->token, (*data)->value);
+	*data = (*data)->prev;
+	current = node;
+	while (*data && ((*data)->token == CMD || (*data)->token == ENV_VAR))
+	{
+		arg_node = create_tree_node((*data)->token, (*data)->value);
+		current->left = arg_node;
+		current = arg_node;
+		*data = (*data)->prev;
+	}
+	return (node);
 }
 
-t_tree_node *parse_command(t_token **data)
+t_tree_node	*parse_expression(t_token **data)
 {
-    t_tree_node *node;
-    t_tree_node *current;
-    t_tree_node *arg_node;
+	t_tree_node	*right_node;
+	int			operator_type;
+	char		*value;
+	t_tree_node	*operator_node;
 
-    if (*data == NULL)
-        return (NULL);
-
-    // Ajusta os tokens para a construção do comando
-    get_command(data);
-
-    node = create_tree_node((*data)->token, (*data)->value);
-    *data = (*data)->next;
-    current = node;
-
-    // Adiciona argumentos à esquerda
-    while (*data && ((*data)->token == CMD || (*data)->token == ENV_VAR))
-    {
-        arg_node = create_tree_node((*data)->token, (*data)->value);
-        current->left = arg_node;
-        current = arg_node;
-        *data = (*data)->next;
-    }
-
-    return (node);
+	right_node = parse_command(data);
+	while (*data && ((*data)->token == PIPE || (*data)->token == REDIRECT_IN
+			|| (*data)->token == REDIRECT_OUT || (*data)->token == APPEND
+			|| (*data)->token == HEREDOC))
+	{
+		operator_type = (*data)->token;
+		value = (*data)->value;
+		*data = (*data)->prev;
+		operator_node = create_tree_node(operator_type, value);
+		operator_node->right = right_node;
+		operator_node->left = parse_command(data);
+		right_node = operator_node;
+	}
+	return (right_node);
 }
-
-t_tree_node *parse_expression(t_token **data)
-{
-    t_tree_node *right_node;
-    int operator_type;
-    char *value;
-    t_tree_node *operator_node;
-
-    right_node = parse_command(data);
-
-    while (*data && ((*data)->token == PIPE || (*data)->token == REDIRECT_IN
-            || (*data)->token == REDIRECT_OUT || (*data)->token == APPEND
-            || (*data)->token == HEREDOC))
-    {
-        operator_type = (*data)->token;
-        value = (*data)->value;
-        *data = (*data)->next;
-        operator_node = create_tree_node(operator_type, value);
-        operator_node->left = right_node;
-        operator_node->right = parse_command(data);
-        right_node = operator_node;
-    }
-
-    return (right_node);
-}
-
-
-
-// t_tree_node	*parse_command(t_token **data)
-// {
-// 	t_tree_node	*node;
-// 	t_tree_node	*current;
-// 	t_tree_node	*arg_node;
-
-// 	if (*data == NULL)
-// 		return (NULL);
-// 	node = create_tree_node((*data)->token, (*data)->value);
-// 	*data = (*data)->prev;
-// 	current = node;
-// 	while (*data && ((*data)->token == CMD || (*data)->token == ENV_VAR))
-// 	{
-// 		arg_node = create_tree_node((*data)->token, (*data)->value);
-// 		current->left = arg_node;
-// 		current = arg_node;
-// 		*data = (*data)->prev;
-// 	}
-// 	return (node);
-// }
-
-// t_tree_node	*parse_expression(t_token **data)
-// {
-// 	t_tree_node	*right_node;
-// 	int			operator_type;
-// 	char		*value;
-// 	t_tree_node	*operator_node;
-
-// 	right_node = parse_command(data);
-// 	while (*data && ((*data)->token == PIPE || (*data)->token == REDIRECT_IN
-// 			|| (*data)->token == REDIRECT_OUT || (*data)->token == APPEND
-// 			|| (*data)->token == HEREDOC))
-// 	{
-// 		operator_type = (*data)->token;
-// 		value = (*data)->value;
-// 		*data = (*data)->prev;
-// 		operator_node = create_tree_node(operator_type, value);
-// 		operator_node->right = right_node;
-// 		operator_node->left = parse_command(data);
-// 		right_node = operator_node;
-// 	}
-// 	return (right_node);
-// }
 
 void	parse(t_token *data)
 {
